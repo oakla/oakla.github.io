@@ -1,0 +1,1 @@
+- [getting my thoughts straight on holding bitcoin](pages\writitings\btc-as-a-store-of-value.md)

@@ -14517,7 +14517,9 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Wald-Wolfowitz-Run-Test">Wald Wolfowitz Run Test<a class="anchor-link" href="#Wald-Wolfowitz-Run-Test">&#182;</a></h1><p><code>A single variable indepence test.</code></p>
 
-<pre><code>This is a work in progress. At this stage I'm not convinced about the critical values mentioned below. It's seems to me that there should be no upper limit to R because the more runs there are, the more likely it is that the groups come from the same population (it think?)</code></pre>
+<pre><code>This is a work in progress. At this stage I'm not convinced about the validity of the critical values mentioned below. e.g., It's seems that there should be no upper limit on R because the more runs there are, the more likely it is that the groups come from the same population (I think?)
+
+In any case, the main purpose of this notebook was to get a comfortable grasp of the algorithm's process and reasoning.</code></pre>
 <p><em>Question</em>: Based on a single variable that we've measured, does group 1 come from a different population to group 2?</p>
 <p>Two groups, X and Y. For each member of each group we have a value of some variable for that member, let's say height, for example.</p>
 <p>Test steps:</p>
@@ -14529,7 +14531,8 @@ a.anchor-link {
 <p>For example, the following sequence has 5 such runs:</p>
 </li>
 </ol>
-$$\begin{matrix} y, &amp; x, &amp; x, &amp; x, &amp; y, &amp; y, &amp; x, &amp; y \end{matrix} $$<ol>
+$$\begin{matrix}    sequence\ \ \ \ \ \ :   &amp; y, &amp; x, &amp; x, &amp; x, &amp; y, &amp; y, &amp; x, &amp; y \\
+                    run\ number: &amp; 1  &amp; 2  &amp; -  &amp; -  &amp; 3  &amp; -  &amp; 4  &amp; 5    \end{matrix} $$<ol>
 <li>Compare the number of runs $R$ to the lower and upper critical values corresponding to the desired level of signifincance $\alpha$.</li>
 </ol>
 <p>The distribution of runs follows something like a binomial distribution:</p>

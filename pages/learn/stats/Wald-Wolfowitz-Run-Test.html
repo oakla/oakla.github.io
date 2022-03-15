@@ -14515,13 +14515,37 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Wald-Wolfowitz-Run-Test">Wald Wolfowitz Run Test<a class="anchor-link" href="#Wald-Wolfowitz-Run-Test">&#182;</a></h1><p><code>A single variable indepence test.</code></p>
+<h1 id="Wald-Wolfowitz-Runs-Test">Wald Wolfowitz Runs Test<a class="anchor-link" href="#Wald-Wolfowitz-Runs-Test">&#182;</a></h1><p><code>A single variable indepence test.</code></p>
+<h2 id="In-a-nutshell">In a nutshell<a class="anchor-link" href="#In-a-nutshell">&#182;</a></h2><p>The Wald-Wolfowitz Runs Test checks the randomness of a sequence of elements where those elements can take one of two mutually exclusive values. It is a non-parametric test.</p>
+<h2 id="Applications">Applications<a class="anchor-link" href="#Applications">&#182;</a></h2><p><strong>Test the randomness of a distribution</strong>: \
+Given a sequence of values from a distribution, each value can be labelled as being above the median '+', below the median '-', or omitted if equal to the median. While keeping the labels in the same order in which their corresponding values were sampled, the labels can be used as input to the Runs Test to check for randomness of the original distribution.</p>
+<p>Sources: <a href="http://www.itl.nist.gov/div898/handbook/">NIST/SEMATECH e-Handbook of Statistical Methods</a></p>
+<p>\
+<strong>Test for the independence of two groups</strong>: \
+Taking one sample each from two groups. If the values can be ordered in some meaningful way (e.g. lowest to highest), we can then check whether these groups represent different populations. This is done by labelling each value according to the group from which it was taken, and then ordering the data in some meaningful way. The labels, once ordered according to their attached values, are then inspected for 'runs'.</p>
+<p>Sources: <a href="https://www.statisticssolutions.com/free-resources/directory-of-statistical-analyses/wald-wolfowitz-run-test/">Complete Dissertation</a></p>
+<p>\
+<strong>Do specific data and a function fit?</strong> \
+Label the data that exceeds the function value with $+$ and the other data with $-$. Take as input to the function some independent variable about the data.</p>
+<p><em>Problems</em>:</p>
+<ul>
+<li>the Runs Test takes into account signs but not distance. This can be accounted for by complementing it with the Chi-Squared test which takes into account distances but not signs.</li>
+<li>the source information suggests labelling data that equals the function value with $-$, but this seems non-sensible seeing this data would support the hypothesis that the data and function fit.<ul>
+<li>my imagined solution is that equal data should not effect the number of runs but still be registered in the count of data points for hypothesis testing.<ul>
+<li>it is possible there is sensibility in the original scheme, despite my misgivings.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Sources: <a href="https://en.wikipedia.org/wiki/Wald%E2%80%93Wolfowitz_runs_test#Applications">Wikipedia</a> | <a href="http://www.itl.nist.gov/div898/handbook/">NIST/SEMATECH e-Handbook of Statistical Methods</a></p>
 
-<pre><code>This is a work in progress. At this stage I'm not convinced about the validity of the critical values mentioned below. e.g., It's seems that there should be no upper limit on R because the more runs there are, the more likely it is that the groups come from the same population (I think?)
-
-In any case, the main purpose of this notebook was to get a comfortable grasp of the algorithm's process and reasoning.</code></pre>
-<p><em>Question</em>: Based on a single variable that we've measured, does group 1 come from a different population to group 2?</p>
-<p>Two groups, X and Y. For each member of each group we have a value of some variable for that member, let's say height, for example.</p>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p><strong>Question</strong>: Based on a single variable that we've measured, does group 1 come from a different population to group 2?</p>
+<p>Two groups of people, X and Y. For each group we have taken measurements of height.</p>
 <p>Test steps:</p>
 <ol>
 <li><strong>Collect</strong> the data</li>
@@ -14533,36 +14557,16 @@ In any case, the main purpose of this notebook was to get a comfortable grasp of
 </ol>
 $$\begin{matrix}    sequence\ \ \ \ \ \ :   &amp; y, &amp; x, &amp; x, &amp; x, &amp; y, &amp; y, &amp; x, &amp; y \\
                     run\ number: &amp; 1  &amp; 2  &amp; -  &amp; -  &amp; 3  &amp; -  &amp; 4  &amp; 5    \end{matrix} $$<ol>
-<li>Compare the number of runs $R$ to the lower and upper critical values corresponding to the desired level of signifincance $\alpha$.</li>
+<li><p>Using a reference distribution as reference, compare the number of runs $R$ to the lower and upper critical values corresponding to the desired level of signifincance $\alpha$.</p>
+<ul>
+<li><p>For 'large' samples ($n_1&gt;10$ and $n_2&gt;10$) compare to standard normal</p>
+</li>
+<li><p>Otherwise, use tables available elsewhere (<a href="https://www.itl.nist.gov/div898/handbook/eda/section4/eda43.htm#Mendenhall">Mendenhall, 1982</a>)</p>
+<p>In the following example we'll use a 'small' sample size but still use a normal distribution as reference for simplicity's sake.</p>
+</li>
+</ul>
+</li>
 </ol>
-<p>The distribution of runs follows something like a binomial distribution:</p>
-
-<pre><code>Let: 
-- $n$ be arbitraryily large,
-- $Z$ be an order listed ${z_0, ... , z_i, ... z_n} \in Z$
-    - made from:
-        - $n_x$ data points from $X$
-        - $n_y$ data points from $Y$
-    - such 
-        - that $n_x + n_y \approx n$
-        - $label(z_i)$ is $X$ if the data point came from $X$, and $Y$ otherwise
-
-Then: 
-- probability that $label(z_i) = label(z_{i+1})$ is about $50\%$
-
-</code></pre>
-<p>We can use this to calculate $P(R = r)$ for some interger $r \in [2, n]$</p>
-<h3 id="Taking-formula-from-a-video-online">Taking formula from a <a href="https://www.youtube.com/watch?v=0SUSwSDR0Ro">video online</a><a class="anchor-link" href="#Taking-formula-from-a-video-online">&#182;</a></h3><p>When sample size is greater than 25*, we can use the following:</p>
-
-<pre><code>- lower bound: $r_{cl} = \mu-1.96\sigma$
-- upped bound: $r_{cu} = \mu-1.96\sigma$
-where:
-- $\mu = \frac{2n-1}{3}$
-- $\sigma = \sqrt{\frac{16n-29}{90}}$
-
-</code></pre>
-<p>If the number of runs falls outside the upper and lower bound, the two groups are likely to represent different populations.</p>
-<p>*For sample sizes less than this, we should use the logic of binomials directly</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14574,7 +14578,8 @@ where:
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">PCG64</span><span class="p">,</span> <span class="n">default_rng</span>
 <span class="kn">import</span> <span class="nn">array_to_latex</span> <span class="k">as</span> <span class="nn">a2l</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">string</span>
 
 <span class="n">out_dir</span> <span class="o">=</span> <span class="s2">&quot;wald-wolfowitz-outputs&quot;</span>
@@ -14597,20 +14602,20 @@ where:
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">PCG64</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">n_x</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">n_A</span> <span class="o">=</span> <span class="n">n_B</span> <span class="o">=</span> <span class="mi">7</span>
 
 <span class="c1"># simulation height data from https://ourworldindata.org/human-height</span>
 <span class="c1"># parameters</span>
 <span class="c1"># # females</span>
-<span class="n">mu_1</span> <span class="o">=</span> <span class="mf">164.7</span> 
+<span class="n">mu_1</span> <span class="o">=</span> <span class="mf">164.7</span>
 <span class="n">sigma_1</span> <span class="o">=</span> <span class="mf">7.07</span>
 <span class="c1"># # males</span>
 <span class="n">mu_2</span> <span class="o">=</span> <span class="mf">178.4</span>
 <span class="n">sigma_2</span> <span class="o">=</span> <span class="mf">7.59</span>
 
 <span class="c1"># Two samples: one sample from females, &amp; one samples from males</span>
-<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu_1</span><span class="p">,</span> <span class="n">sigma_1</span><span class="p">,</span> <span class="n">n_x</span><span class="p">)]</span>
-<span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu_2</span><span class="p">,</span> <span class="n">sigma_2</span><span class="p">,</span> <span class="n">n_x</span><span class="p">)]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu_1</span><span class="p">,</span> <span class="n">sigma_1</span><span class="p">,</span> <span class="n">n_A</span><span class="p">)]</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu_2</span><span class="p">,</span> <span class="n">sigma_2</span><span class="p">,</span> <span class="n">n_B</span><span class="p">)]</span>
 </pre></div>
 
      </div>
@@ -14637,8 +14642,8 @@ $$A=\{\begin{matrix}166.0 &amp; 161.0 &amp; 161.8 &amp; 147.4 &amp; 177.4 &amp; 
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># label each of our &#39;participants&#39; with the group they are a part of</span>
-<span class="n">labelled_A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_x</span><span class="p">)]))</span>
-<span class="n">labelled_B</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_x</span><span class="p">)]))</span>
+<span class="n">labelled_A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_A</span><span class="p">)]))</span>
+<span class="n">labelled_B</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_B</span><span class="p">)]))</span>
 </pre></div>
 
      </div>
@@ -14750,8 +14755,8 @@ $$\begin{matrix}A &amp; A &amp; A &amp; A &amp; A &amp; B &amp; A &amp; B &amp; 
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ordered_labels</span><span class="p">)</span>
 
-<span class="n">mu_0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span> <span class="n">n</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
-<span class="n">sigma_0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">16</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">29</span><span class="p">)</span><span class="o">/</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">mu_0</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_A</span> <span class="o">*</span> <span class="n">n_B</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n_A</span> <span class="o">+</span> <span class="n">n_B</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sigma_0</span> <span class="o">=</span> <span class="p">((</span><span class="n">mu_0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu_0</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">lower</span> <span class="o">=</span> <span class="n">mu_0</span> <span class="o">-</span> <span class="mf">1.96</span><span class="o">*</span><span class="n">sigma_0</span>
 <span class="n">upper</span> <span class="o">=</span> <span class="n">mu_0</span> <span class="o">+</span> <span class="mf">1.96</span><span class="o">*</span><span class="n">sigma_0</span>
 
@@ -14802,14 +14807,14 @@ $$\begin{matrix}A &amp; A &amp; A &amp; A &amp; A &amp; B &amp; A &amp; B &amp; 
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># functions written elsewhere to save lines</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># functions defined below</span>
 
 <span class="kn">from</span> <span class="nn">ipynb.fs.full.wald_tests_generalized</span> <span class="kn">import</span> <span class="n">sim</span>
 
 <span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">PCG64</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">n_x</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">n_i</span> <span class="o">=</span> <span class="mi">7</span>
 <span class="n">is_same_pop</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">sim</span><span class="p">(</span><span class="n">n_x</span><span class="p">,</span> <span class="n">is_same_pop</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<span class="n">sim</span><span class="p">(</span><span class="n">n_i</span><span class="p">,</span> <span class="n">is_same_pop</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14854,9 +14859,9 @@ Do not reject null
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">PCG64</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">n_x</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">n_i</span> <span class="o">=</span> <span class="mi">7</span>
 <span class="n">is_same_pop</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">sim</span><span class="p">(</span><span class="n">n_x</span><span class="p">,</span> <span class="n">is_same_pop</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+<span class="n">sim</span><span class="p">(</span><span class="n">n_i</span><span class="p">,</span> <span class="n">is_same_pop</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14886,6 +14891,20 @@ Reject the null hypothesis
 
 </div>
 
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
 </div>
 
 </div>

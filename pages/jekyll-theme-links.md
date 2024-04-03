@@ -1,5 +1,5 @@
 ---
-layout: minimal_default
+layout: post
 ---
 
 ## Jekyll Themes 

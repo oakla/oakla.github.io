@@ -2,7 +2,11 @@
 layout: default
 ---
 
-[My profile on GitHub ](https://github.com/oakla)
+## Find Me On...
+
+- [GitHub](https://github.com/oakla)
+- [StackOverflow](https://stackoverflow.com/users/1820618/alex-oakley)
+- [LinkedIn](https://www.linkedin.com/in/alexander-oakley/)
 
 ## Wafflings
 - [Secure Key Best Practices](pages/writitings/secure-key-best-practices.md)

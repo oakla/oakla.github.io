@@ -20,3 +20,6 @@ theme: minimal
 - [Slate](https://pages-themes.github.io/slate/)
 - [Tactile](https://pages-themes.github.io/tactile/)
 - [Time machine](https://pages-themes.github.io/time-machine/)
+
+
+theme is minimal

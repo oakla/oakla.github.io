@@ -1,5 +1,5 @@
 ---
-layout:default
+layout: default
 ---
 
 [My profile on GitHub ](https://github.com/oakla)

@@ -5,7 +5,11 @@ I've had some thoughts about this. BTC has some advantages over gold, e.g., it's
 
 It seems like the core requirement of something being a store of value is that it's low risk. Obviously BTC hasn't been low risk so far, but the question is whether it will ever _become_ low risk...
 
-Bitcoin is (1) borderless money that (2) relies on an ecosystem of exchanges and miners, (3) has massive power consumption requirements, but (4) isn't particularly useful as a medium for daily value transaction.
+Bitcoin is 
+1) borderless money that 
+2) relies on an ecosystem of exchanges and miners, 
+3) has massive power consumption requirements, but 
+4) isn't particularly useful as a medium for daily value transaction.
 
 ---
 

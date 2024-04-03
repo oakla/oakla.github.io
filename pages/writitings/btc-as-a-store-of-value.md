@@ -1,7 +1,10 @@
 ---
 layout: default
+title: Is It Sensible to Hold BTC
+date: 2023-01-15
 ---
 
+2023-01-15
 
 as for BTC's value proposition as a store of value...
 

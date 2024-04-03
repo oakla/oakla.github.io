@@ -9,7 +9,7 @@ A ficticious client, at a ficticious company, has asked that their encryption to
 	- Contain *at least 3* of the following **uppercase**, **lowercase**, **numbers**, and **special characters**.  
 	- Avoid using dictionary words
 
-### A response
+### A Response
 The letter below makes the case that the guidelines do more harm than good.   
 
 ---

@@ -1,4 +1,8 @@
- 
+---
+template: default
+---
+
+
 as for BTC's value proposition as a store of value...
 
 I've had some thoughts about this. BTC has some advantages over gold, e.g., it's easier to store and transfer, which sounds good. So, is it better than gold? 

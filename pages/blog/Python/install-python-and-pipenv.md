@@ -28,29 +28,8 @@ Installation is complete.
 ---
 
 ## pipenv notes
-[See here](https://docs.python-guide.org/dev/virtualenvs/#installing-packages-for-your-project) for more instructions on how to use **pipenv**.
-
-- pipenv is a higher level too than pip. Pipenv is meant to simplify dependency management.
-
-- **Installing packages**
-	```
-	$ cd project_folder
-	$ pipenv install requests
-	```
-	This will create a `Pipfile` in the project directory. The Pipfile is used to track dependencies your project needs
-
-- To **run** python files from the virtual environment, use either:
-	- `$ pipenv run python main.py`
-	- `$ pipenv shell`  
-	- The latter will open a shell that ensures all commands have access to packages of the virtual environment. 
-	-
-
-### Remarks
-- When I ran this process, a warning about dependencies ([1](#error-messages)) came up after I setup a new pipenv. I fixed it with `pipenv lock --clear`, a solution which came from [here](https://stackoverflow.com/questions/51512519/pipenv-how-to-resolve-dependency-conflicts)
-- When using pipenv, you can still install to the global environment with `pip`. e.g.,
-    ```shell
-    $ pip install requests
-    ```
+- [My notes](Setup\pipenv\notes.md) on pipenv
+- [Hitchhiker's Guide to Python](https://docs.python-guide.org/dev/virtualenvs/#installing-packages-for-your-project) guide to **pipenv**.
 
 ### VSCode
 - install the Python extension

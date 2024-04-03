@@ -29,7 +29,7 @@ Now I will do the following
 3. export to html from admin cmd
    - run `$ jupyter nbconvert --to html scratch_nb.ipynb`
    - gives error: `ImportError: cannot import name 'contextfilter' from 'jinja2' (C:\Python310\lib\site-packages\jinja2\__init__.py)`
-4. These are two different problems. I am confused!
+4. (2) & (3) are two different problems. I am confused!
    1. This must mean that vscode and cmd are using different interpreters
    2. **cmd** `$ where jupyter`
      - `C:\Users\alexa\AppData\Roaming\Python\Python310\Scripts\jupyter.exe`

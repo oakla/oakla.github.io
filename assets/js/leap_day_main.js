@@ -1,3 +1,4 @@
+// Taken from the 'leap_day_theme'
 var sectionHeight = function() {
     var total    = $(window).height(),
         $section = $('section').css('height','auto');

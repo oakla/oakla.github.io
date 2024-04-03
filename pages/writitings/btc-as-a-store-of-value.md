@@ -1,5 +1,5 @@
 ---
-layout: default
+# layout: default
 title: Is It Sensible to Hold BTC
 date: 2023-01-15
 ---

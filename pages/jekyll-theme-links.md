@@ -1,5 +1,6 @@
 ---
 layout: minimal_default
+theme: minimal
 ---
 
 ## Jekyll Themes 

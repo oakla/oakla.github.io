@@ -1,3 +1,7 @@
+---
+layout: post
+---
+
 ## Jekyll Themes 
 [Source code repos](https://pages.github.com/themes/) for all GitHub Pages supported themes
 

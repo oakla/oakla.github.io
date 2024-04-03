@@ -16,8 +16,6 @@ layout: default
 
 <!-- ![Sir Edmond 'Weary' Dunlop, take in the Bontanical Gardens on my way home from a PCR test](/images/edmund-dunlop.jpg) -->
 
-
-
 ## Quick Reference
-- [Jekyll Themes for GitHub Pages]()
+- [Jekyll Themes for GitHub Pages](/pages/jekyll-theme-links.md)
 

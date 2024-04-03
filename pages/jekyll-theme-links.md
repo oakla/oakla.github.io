@@ -1,5 +1,5 @@
 ---
-layout: minimal_default
+layout: post
 theme: minimal
 ---
 
@@ -23,3 +23,4 @@ theme: minimal
 
 
 theme is minimal
+layout is post

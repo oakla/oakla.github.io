@@ -1,6 +1,6 @@
 ---
 layout: post
-theme: minimal
+# theme: minimal
 ---
 
 ## Jekyll Themes 
@@ -22,5 +22,5 @@ theme: minimal
 - [Time machine](https://pages-themes.github.io/time-machine/)
 
 
-theme is minimal
+theme is default
 layout is post

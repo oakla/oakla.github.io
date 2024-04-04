@@ -73,8 +73,11 @@ call python -m pip install --upgrade pip
 
 echo Python development environment initialized.
 
-echo Installing bot package
-call python -m pip install %BOT_NAME%
+echo Checking for bot updates...
+call python -m pip install --upgrade %BOT_NAME%
+
+echo Launching bot...
+call python -m %BOT_NAME%
 
 pause
 ```

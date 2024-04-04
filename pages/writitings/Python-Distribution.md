@@ -34,9 +34,11 @@ In the case of Python bots we are considering 2 options:
 ## Answer
 
 ### Python Virtual Environments
-If you want users to run their bots in virtual environments, it is best to create them on the user's machine as needed, rather than having the user download them. A pre-built environment would need to be modified after download to function properly. 
+You seem to be suggesting that your users download a pre-built virtual environment with each bot. This is not how virtual environments are designed to be used. A pre-built virtual environment would need to be modified after download to function properly. 
 
-Also, there is usually no reason to couple of virtual environment with an exe file. The benefit of distribution as exe files is that you can bundle all the dependencies into the exe file, thus eliminating the need for a Python virtual environment.
+**If you want users to run their bots in virtual environments, it is best to create them on the user's machine as needed**, rather than having the user download a pre-built one. 
+
+Also, there is usually no reason to couple a virtual environment with an exe file. The benefit of distribution as an exe file is that you can bundle all the dependencies into that exe file, thus eliminating the need for a Python virtual environment.
 
 ### EXE files
 It is a good idea to implement *some* kind of 'bundling' or packaging. Exe files do this by default, but the downside is that they give you very little control over pushing updates 

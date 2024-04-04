@@ -54,22 +54,29 @@ If your bots exist as Python packages, you can store them and their dependencies
 - check for updates & install the bot into a Python virtual environment onto the user's machine (if it isn't already installed), and then
 - run the bot
 
-This takes only 2 lines of code (not including the creation of a Python virtual environment)
+This only takes a few lines of code:
 ```batch
 set VENV_DIR=%~dp0.venv
+set BOT_NAME=your_bot_package_name_here
 
-REM Create a Python virtual environment if it doesn't already exist
+@REM Create a Python virtual environment if it doesn't already exist
 if not exist "%VENV_DIR%" (
-    python -m venv "%VENV_DIR%"
+    echo Creating a Python virtual environment...
+    call python -m venv "%VENV_DIR%"
 )
 
-REM Activate the virtual environment
+echo Activating virtual environment
 call "%VENV_DIR%\Scripts\activate.bat"
 
-REM Update pip in the virtual environment
-python -m pip install --upgrade pip
+echo Checking for pip updates...
+call python -m pip install --upgrade pip
 
 echo Python development environment initialized.
+
+echo Installing bot package
+call python -m pip install %BOT_NAME%
+
+pause
 ```
 
 ### Conclusion

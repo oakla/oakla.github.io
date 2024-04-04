@@ -13,6 +13,7 @@ title: Home
 - [Secure Key Best Practices](pages/writitings/secure-key-best-practices.md)
 - [Is it sensible to hold BTC?](pages/writitings/btc-as-a-store-of-value.md)
 - [A look at The Wald Wolfowitz Run's Test](pages/learn/stats/Wald-Wolfowitz-Run-Test.html)
+- [Python App Distribution Q&A](/pages/writitings/Python-Distribution.md)
 
 
 ## Other Links

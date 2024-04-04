@@ -4,15 +4,14 @@ title: Python App Distribution Q&A
 layout: post
 ---
 
-# Python App Distribution Q&A
+I was asked for advice on how to distribute a collection of small Python apps (bots).
 
-I was asked for advice on how to distribute a collection of small Python apps.
 ## Question
 We have to deliver 3 bots soon, and we want to decide on how user's install and/or run these bots. For the users, the bots are initally accessed through an HTML page; the user clicks on a link for the bot they need, and some kind of file for launching the bot is downloaded. 
 
 In the case of Python bots we are considering 2 options:
 ### Option 1: Distribute entire bot as `exe` file
-- We are converting the python script to EXE through Pyinstaller. Now the client do not need python dependencies to run the script.
+- We are converting the python script to EXE through Pyinstaller. Now the client does not need python dependencies to run the script.
 - In the webrunner UI, we are making client to download a zip that contains .exe and .env file. The client clicks on exe file to run the bot.
 - Pros: 
 	- User does not need python as dependency.
@@ -33,6 +32,11 @@ In the case of Python bots we are considering 2 options:
 - There is a friction right now to install python packages as azure artifactory is yet to give access to us. 
   
 ## Answer
+
+### Python Virtual Environments
+If you want users to run their bots in virtual environments, it is best to create them on the user's machine as needed, rather than having the user download them. A pre-built environment would need to be modified after download to function properly. 
+
+Also, there is usually no reason to couple of virtual environment with an exe file. The benefit of distribution as exe files is that you can bundle all the dependencies into the exe file, thus eliminating the need for a Python virtual environment.
 
 ### EXE files
 It is a good idea to implement *some* kind of 'bundling' or packaging. Exe files do this by default, but the downside is that they give you very little control over pushing updates 

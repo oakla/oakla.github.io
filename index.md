@@ -3,9 +3,10 @@ layout: default
 title: Home
 ---
 
-## Some of my work
+## Projects (Some of My Work)
 
 - [Contributions to Jamovi](https://github.com/jamovi/jamovi/pulls?q=is%3Apr+author%3Aoakla): Pull requests to Jamovi on Github.
+- Automated Staff Roster(Currently a private repo): Flask app that allows staff to submit their availability and then generate a roster.
 - [octk](https://pypi.org/project/octk/): Python Package containing a few utilities I wrote and often find useful.
 - [Distributed File System Explorer](https://github.com/oakla/distributed_fs): A proof of concept implemented with low level sockets in Python. 
 - [Zippy](https://github.com/oakla/zippy): A drag and drop tool to help zip and encrypt. Originally built for a previous employer as a way to circumvent the slow load times of the WinZip GUI.

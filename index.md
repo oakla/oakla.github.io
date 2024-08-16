@@ -29,9 +29,6 @@ title: Home
 ## Other Links
 - [The repo for this website](https://github.com/oakla/oakla.github.io)
 
-
-<!-- ![Sir Edmond 'Weary' Dunlop, take in the Bontanical Gardens on my way home from a PCR test](/images/edmund-dunlop.jpg) -->
-
 ## Quick Reference
 - [Jekyll Themes for GitHub Pages](/pages/jekyll-theme-links.md)
 

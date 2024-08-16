@@ -5,11 +5,11 @@ title: Home
 
 ## Some of my work
 
-- Pull requests to [Jamovi on Github](https://github.com/jamovi/jamovi/pulls?q=is%3Apr+author%3Aoakla)
-- Python Package containing a few utilities I wrote and often find useful: [octk](https://pypi.org/project/octk/)
-- A proof of concept [Distributed File System Explorer](https://github.com/oakla/distributed_fs).
+- [Contributions to Jamovi](https://github.com/jamovi/jamovi/pulls?q=is%3Apr+author%3Aoakla): Pull requests to Jamovi on Github.
+- [octk](https://pypi.org/project/octk/): Python Package containing a few utilities I wrote and often find useful.
+- [Distributed File System Explorer](https://github.com/oakla/distributed_fs): A proof of concept implemented with low level sockets in Python. 
 - [Zippy](https://github.com/oakla/zippy): A drag and drop tool to help zip and encrypt. Originally built for a previous employer as a way to circumvent the slow load times of the WinZip GUI.
-- Pull requests to [Neurodata's Hyppo on Github](https://github.com/search?q=org%3Aneurodata%20is%3Apr%20author%3Aoakla&type=pullrequests)
+- [Contribution's to Neurodata's Hyppo](https://github.com/search?q=org%3Aneurodata%20is%3Apr%20author%3Aoakla&type=pullrequests): Pull requests to Hyppo on Github.
 
 
 ## Find Me On...

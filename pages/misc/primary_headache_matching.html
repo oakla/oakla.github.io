@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primary Headache Matching Exercise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --migraine-dark:  #2D3A8C;
+  --migraine-mid:   #5B6FD4;
+  --migraine-light: #E8EBFB;
+  --migraine-pill:  #C3C9F4;
+
+  --tension-dark:  #1A6B4A;
+  --tension-mid:   #3AAD7A;
+  --tension-light: #E2F5EC;
+  --tension-pill:  #A8DFCA;
+
+  --cluster-dark:  #8C2A1A;
+  --cluster-mid:   #D95F3B;
+  --cluster-light: #FAEAE5;
+  --cluster-pill:  #F4BBA8;
+
+  --cat-char-bg: #FDF3E3; --cat-char-fg: #7A4E0D; --cat-char-border: #F0D9A8;
+  --cat-loc-bg:  #EAE5FB; --cat-loc-fg:  #4A2F8C; --cat-loc-border:  #C8BFF2;
+  --cat-dur-bg:  #E3F4F9; --cat-dur-fg:  #0D5C76; --cat-dur-border:  #A8D8E8;
+  --cat-sym-bg:  #F9E5F0; --cat-sym-fg:  #7A1A52; --cat-sym-border:  #E8BAD8;
+
+  --bg:      #F2F0EC;
+  --surface: #FFFFFF;
+  --border:  #DDD9D0;
+  --text:    #1C1B18;
+  --muted:   #72706A;
+  --radius:  12px;
+  --radius-sm: 8px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+}
+
+.header-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.header-eyebrow span { display:inline-block; width:24px; height:1px; background:var(--border); }
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+h1 em { font-weight: 400; font-style: italic; color: var(--muted); }
+
+.subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto 1.6rem;
+  line-height: 1.7;
+}
+
+/* Legend rows */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+}
+.legend-swatch { width: 28px; height: 6px; border-radius: 3px; }
+
+.cat-legend {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.cat-pill {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 3px 11px; border-radius: 20px; border: 1px solid transparent;
+}
+.cat-pill.char { background:var(--cat-char-bg); color:var(--cat-char-fg); border-color:var(--cat-char-border); }
+.cat-pill.loc  { background:var(--cat-loc-bg);  color:var(--cat-loc-fg);  border-color:var(--cat-loc-border); }
+.cat-pill.dur  { background:var(--cat-dur-bg);  color:var(--cat-dur-fg);  border-color:var(--cat-dur-border); }
+.cat-pill.sym  { background:var(--cat-sym-bg);  color:var(--cat-sym-fg);  border-color:var(--cat-sym-border); }
+
+/* ── Score bar ── */
+.score-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 2rem;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2.5rem; flex-wrap: wrap;
+}
+.score-item { display:flex; align-items:center; gap:7px; font-size:13px; color:var(--muted); }
+.score-num { font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--text); }
+.progress-track { width:140px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.progress-fill {
+  height:100%; border-radius:3px;
+  background: linear-gradient(90deg, var(--migraine-mid), var(--tension-mid));
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  width:0%;
+}
+
+/* ── Main ── */
+.main { max-width:1120px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+
+/* ── Controls ── */
+.controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:1.5rem; align-items:center; }
+
+.btn {
+  padding:9px 22px; font-size:13px; font-weight:600;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  border-radius:var(--radius-sm); cursor:pointer;
+  transition:all 0.15s;
+  border:1.5px solid var(--border);
+  background:var(--surface); color:var(--text);
+}
+.btn:hover { background:var(--bg); border-color:#bbb; }
+.btn-primary { background:var(--text); color:#fff; border-color:var(--text); }
+.btn-primary:hover { background:#333; }
+
+.tap-hint { font-size:12px; color:var(--muted); font-style:italic; }
+
+/* ── Feedback ── */
+.feedback {
+  border-radius:var(--radius); padding:14px 18px;
+  font-size:14px; line-height:1.6;
+  display:none; margin-bottom:1.5rem;
+  border-left:4px solid transparent;
+}
+.feedback.show { display:block; }
+.feedback.win     { background:var(--tension-light); border-color:var(--tension-mid); color:#0E4030; }
+.feedback.partial { background:#FFFBEE; border-color:#E8C84A; color:#5C4900; }
+.feedback-title { font-weight:600; margin-bottom:3px; font-size:15px; }
+
+/* ── Drop zones ── */
+.zones {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:14px; margin-bottom:2rem;
+}
+@media (max-width:700px) { .zones { grid-template-columns:1fr; } }
+
+.zone {
+  background:var(--surface);
+  border:2px dashed var(--border);
+  border-radius:var(--radius);
+  padding:14px; min-height:160px;
+  transition:border-color 0.2s, background 0.2s;
+  animation:fadeUp 0.35s ease both;
+}
+.zone:nth-child(2) { animation-delay:0.07s; }
+.zone:nth-child(3) { animation-delay:0.14s; }
+
+.zone[data-type="migraine"] { border-color:var(--migraine-pill); }
+.zone[data-type="tension"]  { border-color:var(--tension-pill); }
+.zone[data-type="cluster"]  { border-color:var(--cluster-pill); }
+
+.zone[data-type="migraine"].drag-over { background:var(--migraine-light); border-color:var(--migraine-mid); border-style:solid; }
+.zone[data-type="tension"].drag-over  { background:var(--tension-light);  border-color:var(--tension-mid);  border-style:solid; }
+.zone[data-type="cluster"].drag-over  { background:var(--cluster-light);  border-color:var(--cluster-mid);  border-style:solid; }
+
+.zone-header {
+  display:flex; align-items:center; gap:9px;
+  margin-bottom:12px; padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.zone-icon {
+  width:32px; height:32px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; flex-shrink:0;
+}
+.zone[data-type="migraine"] .zone-icon { background:var(--migraine-light); }
+.zone[data-type="tension"]  .zone-icon { background:var(--tension-light); }
+.zone[data-type="cluster"]  .zone-icon { background:var(--cluster-light); }
+
+.zone-name { font-size:14px; font-weight:600; }
+.zone[data-type="migraine"] .zone-name { color:var(--migraine-dark); }
+.zone[data-type="tension"]  .zone-name { color:var(--tension-dark); }
+.zone[data-type="cluster"]  .zone-name { color:var(--cluster-dark); }
+
+.zone-count {
+  margin-left:auto; font-size:11px; font-weight:600;
+  padding:2px 9px; border-radius:20px;
+}
+.zone[data-type="migraine"] .zone-count { background:var(--migraine-light); color:var(--migraine-dark); }
+.zone[data-type="tension"]  .zone-count { background:var(--tension-light);  color:var(--tension-dark); }
+.zone[data-type="cluster"]  .zone-count { background:var(--cluster-light);  color:var(--cluster-dark); }
+
+.placed-cards { display:flex; flex-direction:column; gap:7px; }
+
+.empty-hint {
+  font-size:12px; color:#C0BDB5;
+  text-align:center; padding:14px 0; font-style:italic;
+}
+
+/* ── Pool ── */
+.pool-section { margin-bottom:1.5rem; }
+.pool-label {
+  font-size:11px; font-weight:600; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:12px;
+}
+.pool { display:flex; flex-wrap:wrap; gap:9px; }
+
+/* ── Cards ── */
+.card {
+  border-radius:var(--radius-sm);
+  padding:11px 32px 11px 12px;
+  font-size:13px; line-height:1.55;
+  cursor:grab; user-select:none; max-width:310px;
+  transition:transform 0.15s, box-shadow 0.15s;
+  position:relative;
+  border-left:4px solid transparent;
+  border-top:1px solid transparent;
+  border-right:1px solid transparent;
+  border-bottom:1px solid transparent;
+  animation:cardIn 0.25s ease both;
+}
+
+.card[data-cat="Characteristics"] {
+  background:var(--cat-char-bg); border-left-color:var(--cat-char-fg);
+  border-top-color:var(--cat-char-border); border-right-color:var(--cat-char-border); border-bottom-color:var(--cat-char-border);
+  color:var(--cat-char-fg);
+}
+.card[data-cat="Location"] {
+  background:var(--cat-loc-bg); border-left-color:var(--cat-loc-fg);
+  border-top-color:var(--cat-loc-border); border-right-color:var(--cat-loc-border); border-bottom-color:var(--cat-loc-border);
+  color:var(--cat-loc-fg);
+}
+.card[data-cat="Duration"] {
+  background:var(--cat-dur-bg); border-left-color:var(--cat-dur-fg);
+  border-top-color:var(--cat-dur-border); border-right-color:var(--cat-dur-border); border-bottom-color:var(--cat-dur-border);
+  color:var(--cat-dur-fg);
+}
+.card[data-cat="Associated symptoms"] {
+  background:var(--cat-sym-bg); border-left-color:var(--cat-sym-fg);
+  border-top-color:var(--cat-sym-border); border-right-color:var(--cat-sym-border); border-bottom-color:var(--cat-sym-border);
+  color:var(--cat-sym-fg);
+}
+
+.card:hover { transform:translateY(-2px); box-shadow:0 5px 18px rgba(0,0,0,0.10); }
+.card:active { cursor:grabbing; transform:scale(0.97); }
+.card.dragging { opacity:0.3; transform:scale(0.96); }
+
+.card.selected {
+  outline:2.5px solid #5B6FD4;
+  outline-offset:1px;
+  box-shadow:0 0 0 4px rgba(91,111,212,0.15);
+}
+
+.card.correct {
+  background:#D6F0E5 !important;
+  border-left-color:var(--tension-dark) !important;
+  border-top-color:#A8D9C0 !important; border-right-color:#A8D9C0 !important; border-bottom-color:#A8D9C0 !important;
+  color:#0E4030 !important; cursor:default;
+}
+.card.incorrect {
+  background:#FAD9D5 !important;
+  border-left-color:var(--cluster-dark) !important;
+  border-top-color:#F0B0A0 !important; border-right-color:#F0B0A0 !important; border-bottom-color:#F0B0A0 !important;
+  color:#5C1010 !important;
+  animation:shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%,100% { transform:translateX(0); }
+  20% { transform:translateX(-5px); }
+  60% { transform:translateX(5px); }
+}
+
+.card-category {
+  font-size:10px; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
+  opacity:0.6; margin-bottom:5px;
+}
+
+.card-status {
+  position:absolute; top:9px; right:10px;
+  font-size:15px; display:none;
+}
+.card.correct .card-status,
+.card.incorrect .card-status { display:block; }
+
+.placed-card-wrap .card { max-width:100%; font-size:12px; padding:9px 28px 9px 11px; }
+
+/* ── Footer ── */
+footer {
+  text-align:center; font-size:12px; color:var(--muted);
+  padding:2rem; border-top:1px solid var(--border); background:var(--surface);
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes cardIn {
+  from { opacity:0; transform:translateY(5px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow"><span></span>Clinical Education<span></span></div>
+  <h1>Primary Headache <em>Matching Exercise</em></h1>
+  <p class="subtitle">Drag each card into the correct headache type column. Cards are colour-coded by category.</p>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--migraine-mid)"></div>Migraine</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--tension-mid)"></div>Tension-type</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--cluster-mid)"></div>Cluster</div>
+  </div>
+  <div class="cat-legend" style="margin-top:10px;">
+    <span class="cat-pill char">Characteristics</span>
+    <span class="cat-pill loc">Location</span>
+    <span class="cat-pill dur">Duration</span>
+    <span class="cat-pill sym">Associated symptoms</span>
+  </div>
+</header>
+
+<div class="score-bar">
+  <div class="score-item">
+    <span class="score-num" id="placed-count">0</span>
+    <span>of 12 placed</span>
+  </div>
+  <div class="score-item">
+    <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+  </div>
+  <div class="score-item">
+    <span class="score-num" id="correct-count">—</span>
+    <span>correct</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="controls">
+    <button class="btn btn-primary" onclick="checkAnswers()">Check answers</button>
+    <button class="btn" onclick="resetGame()">Start over</button>
+    <span class="tap-hint">Tip: tap a card to select it, then tap a column — or drag &amp; drop.</span>
+  </div>
+
+  <div id="feedback" class="feedback"></div>
+
+  <div class="zones" id="zones">
+    <div class="zone" data-type="migraine" id="zone-migraine">
+      <div class="zone-header">
+        <div class="zone-icon">🧠</div>
+        <span class="zone-name">Migraine</span>
+        <span class="zone-count" id="count-migraine">0</span>
+      </div>
+      <div class="placed-cards" id="placed-migraine"><div class="empty-hint">Drop cards here</div></div>
+    </div>
+    <div class="zone" data-type="tension" id="zone-tension">
+      <div class="zone-header">
+        <div class="zone-icon">🤕</div>
+        <span class="zone-name">Tension-type</span>
+        <span class="zone-count" id="count-tension">0</span>
+      </div>
+      <div class="placed-cards" id="placed-tension"><div class="empty-hint">Drop cards here</div></div>
+    </div>
+    <div class="zone" data-type="cluster" id="zone-cluster">
+      <div class="zone-header">
+        <div class="zone-icon">⚡</div>
+        <span class="zone-name">Cluster</span>
+        <span class="zone-count" id="count-cluster">0</span>
+      </div>
+      <div class="placed-cards" id="placed-cluster"><div class="empty-hint">Drop cards here</div></div>
+    </div>
+  </div>
+
+  <div class="pool-section">
+    <div class="pool-label">Cards to place</div>
+    <div class="pool" id="pool"></div>
+  </div>
+</div>
+
+<footer>Based on ICHD-3 diagnostic criteria for primary headache disorders.</footer>
+
+<script>
+const CARDS = [
+  { id:'c1',  text:'Pressure or tightness. Non-pulsating. Mild–moderate. No worse with routine physical activity.', category:'Characteristics', answer:'tension' },
+  { id:'c2',  text:'Gradual onset. Pulsating, moderate or severe intensity. Aggravated by routine physical activity.', category:'Characteristics', answer:'migraine' },
+  { id:'c3',  text:'Pain begins quickly, reaching a crescendo within minutes. Deep, continuous, excruciating.', category:'Characteristics', answer:'cluster' },
+  { id:'c4',  text:'Bilateral', category:'Location', answer:'tension' },
+  { id:'c5',  text:'Unilateral in 60–70% of adults', category:'Location', answer:'migraine' },
+  { id:'c6',  text:'Unilateral — usually begins around the eye or temple', category:'Location', answer:'cluster' },
+  { id:'c7',  text:'30 minutes – 7 days', category:'Duration', answer:'tension' },
+  { id:'c8',  text:'4 hours – 3 days', category:'Duration', answer:'migraine' },
+  { id:'c9',  text:'15 minutes – 3 hours', category:'Duration', answer:'cluster' },
+  { id:'c10', text:'Usually none. May have one of either photophobia or phonophobia.', category:'Associated symptoms', answer:'tension' },
+  { id:'c11', text:'Nausea and/or vomiting. Photophobia and phonophobia. May have aura.', category:'Associated symptoms', answer:'migraine' },
+  { id:'c12', text:'At least one autonomic feature: conjunctival injection/lacrimation, nasal congestion/rhinorrhoea, eyelid oedema, forehead/facial sweating, miosis/ptosis. Possible restlessness or agitation.', category:'Associated symptoms', answer:'cluster' },
+];
+
+let placed = {}, selected = null, checked = false;
+
+function shuffle(arr) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function createCardEl(card, inZone) {
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.id = 'card-' + card.id;
+  div.dataset.id = card.id;
+  div.dataset.cat = card.category;
+  div.draggable = true;
+  div.innerHTML = `<div class="card-category">${card.category}</div>${card.text}<span class="card-status" id="status-${card.id}"></span>`;
+
+  div.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text/plain', card.id);
+    setTimeout(() => div.classList.add('dragging'), 0);
+    clearSelection();
+  });
+  div.addEventListener('dragend', () => div.classList.remove('dragging'));
+
+  div.addEventListener('click', e => {
+    e.stopPropagation();
+    if (div.classList.contains('correct')) return;
+    if (inZone) { removeCard(card.id); return; }
+    if (selected === card.id) { clearSelection(); }
+    else { clearSelection(); selected = card.id; div.classList.add('selected'); }
+  });
+
+  return div;
+}
+
+function clearSelection() {
+  if (selected) { const p=document.getElementById('card-'+selected); if(p) p.classList.remove('selected'); }
+  selected = null;
+}
+
+function placeCard(id, type) { placed[id]=type; clearSelection(); clearFeedback(); render(); }
+function removeCard(id) { delete placed[id]; clearSelection(); clearFeedback(); render(); }
+
+function render() {
+  const pool = document.getElementById('pool');
+  pool.innerHTML = '';
+  shuffle(CARDS).filter(c=>!placed[c.id]).forEach((card,i)=>{
+    const el = createCardEl(card,false);
+    el.style.animationDelay=(i*0.04)+'s';
+    pool.appendChild(el);
+  });
+
+  ['migraine','tension','cluster'].forEach(type=>{
+    const cont=document.getElementById('placed-'+type);
+    cont.innerHTML='';
+    const zc=CARDS.filter(c=>placed[c.id]===type);
+    if(zc.length===0){ cont.innerHTML='<div class="empty-hint">Drop cards here</div>'; }
+    else { zc.forEach(card=>{ const w=document.createElement('div'); w.className='placed-card-wrap'; const el=createCardEl(card,true); el.style.animationDelay='0s'; w.appendChild(el); cont.appendChild(w); }); }
+    document.getElementById('count-'+type).textContent=zc.length;
+  });
+
+  if(checked) applyCheckStyling();
+
+  const n=Object.keys(placed).length;
+  document.getElementById('placed-count').textContent=n;
+  document.getElementById('progress').style.width=(n/CARDS.length*100)+'%';
+}
+
+function setupDropZones() {
+  document.querySelectorAll('.zone').forEach(zone=>{
+    const type=zone.dataset.type;
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
+    zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');const id=e.dataTransfer.getData('text/plain');if(id)placeCard(id,type);});
+    zone.addEventListener('click',()=>{if(selected)placeCard(selected,type);});
+  });
+  document.addEventListener('click',()=>clearSelection());
+}
+
+function applyCheckStyling() {
+  CARDS.forEach(card=>{
+    const el=document.getElementById('card-'+card.id);
+    const st=document.getElementById('status-'+card.id);
+    if(!el) return;
+    el.classList.remove('correct','incorrect');
+    if(placed[card.id]===card.answer){ el.classList.add('correct'); el.draggable=false; if(st)st.textContent='✓'; }
+    else if(placed[card.id]){ el.classList.add('incorrect'); if(st)st.textContent='✗'; }
+  });
+}
+
+function checkAnswers() {
+  const n=Object.keys(placed).length;
+  if(n===0){showFeedback('partial','No cards placed yet','Drag or tap cards into the columns above, then check your answers.');return;}
+  checked=true; applyCheckStyling();
+  const correct=CARDS.filter(c=>placed[c.id]===c.answer).length;
+  const wrong=CARDS.filter(c=>placed[c.id]&&placed[c.id]!==c.answer).length;
+  const unplaced=CARDS.length-n;
+  document.getElementById('correct-count').textContent=correct;
+  if(correct===CARDS.length){
+    showFeedback('win',`Perfect — ${correct}/12 correct!`,'Excellent work. All cards matched correctly.');
+  } else {
+    showFeedback('partial',`${correct}/12 correct`,`${wrong} card${wrong!==1?'s are':' is'} in the wrong column${unplaced?` and ${unplaced} still unplaced`:''}. Click placed cards to return them to the pool.`);
+  }
+}
+
+function showFeedback(type,title,body) {
+  const fb=document.getElementById('feedback');
+  fb.className='feedback show '+type;
+  fb.innerHTML=`<div class="feedback-title">${title}</div>${body}`;
+}
+
+function clearFeedback() {
+  checked=false;
+  const fb=document.getElementById('feedback'); fb.className='feedback'; fb.innerHTML='';
+  document.getElementById('correct-count').textContent='—';
+  CARDS.forEach(c=>{
+    const el=document.getElementById('card-'+c.id);
+    if(el){el.classList.remove('correct','incorrect');el.draggable=true;}
+    const s=document.getElementById('status-'+c.id); if(s)s.textContent='';
+  });
+}
+
+function resetGame() { placed={}; selected=null; checked=false; clearFeedback(); render(); }
+
+setupDropZones();
+resetGame();
+</script>
+</body>
+</html>

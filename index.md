@@ -28,6 +28,7 @@ title: Home
 
 ## Other Links
 - [The repo for this website](https://github.com/oakla/oakla.github.io)
+- [Headache Presentation Matching Game](pages/misc/primary_headache_matching.html)
 
 ## Quick Reference
 - [Jekyll Themes for GitHub Pages](/pages/jekyll-theme-links.md)
